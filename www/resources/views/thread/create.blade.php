@@ -20,3 +20,15 @@
     </div>
   </form>
 @endsection
+
+@push('scripts')
+<script>
+  tinymce.init({
+      selector:'textarea#content',
+      statusbar:false,
+      menubar:false,
+      width: "100%",
+      height: 300
+  });
+</script>
+@endpush
