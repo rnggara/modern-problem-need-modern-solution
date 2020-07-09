@@ -20,11 +20,11 @@
     <div class="d-flex justify-content-end">
         <a href="/thread" class="btn btn-success">Kembali</a>
         <button type="submit" class="btn btn-primary ml-2">Perbarui Thread</button>
-        <form action="/thread/{{$thread->id}}" method="post">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="btn btn-danger ml-2">Hapus</button>
-        </form>
     </div>
   </form>
+  <form action="/thread/{{$thread->id}}" class="mt-n2" method="post">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger mt-n5">Hapus</button>
+        </form>
 @endsection
