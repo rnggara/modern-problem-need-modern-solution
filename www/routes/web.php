@@ -11,8 +11,36 @@
 |
 */
 
-Route::get('/', 'ThreadController@index');
+// <<<<<<< master
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+// Route::get('/master', function () {
+//     return view('templateforum.master');
+// });
 
+// Route::get('/masuk', function () {
+//     return view('masuk');
+// });
+// =======
+// Route::get('/', 'ThreadController@index');
+// >>>>>>> master
+
+Route::get('/forumhome', function () {
+    return view('items.forumhome');
+});
+Route::get('/isiforum', function () {
+    return view('items.isiforum');
+});
+Route::get('/tanyaforum', function () {
+    return view('items.tanyaforum');
+});
 Auth::routes();
 
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('Thread', 'ThreadController@index');
+=======
 Route::resource('thread', 'ThreadController');
+

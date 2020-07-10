@@ -1,0 +1,6 @@
+date	size'/'remotesize	flags(request:Update,Range state:File response:Modified,Chunked,gZipped)	statuscode	status ('servermsg')	MIME	Etag|Date	URL	localfile	(from URL)
+22:00:29	1995/1995	---M--	403	error ('Forbidden')	text/html	date:Wed,%2008%20Jul%202020%2015:00:28%20GMT	http://stackoverflow.com/questions	C:/Users/Alissa%20Yarmantho/Documents/Copied%20website/Forum/stackoverflow.com/questions.0.delayed	(from )
+22:00:30	2007/2007	---M--	403	error ('Forbidden')	text/html	date:Wed,%2008%20Jul%202020%2015:00:29%20GMT	https://stackoverflow.com/tags	C:/Users/Alissa%20Yarmantho/Documents/Copied%20website/Forum/stackoverflow.com/tags.1.delayed	(from )
+22:00:30	2008/2008	---M--	403	error ('Forbidden')	text/html	date:Wed,%2008%20Jul%202020%2015:00:29%20GMT	https://stackoverflow.com/users	C:/Users/Alissa%20Yarmantho/Documents/Copied%20website/Forum/stackoverflow.com/users.2.delayed	(from )
+22:00:31	1998/1998	---M--	403	error ('Forbidden')	text/html	date:Wed,%2008%20Jul%202020%2015:00:30%20GMT	http://stackoverflow.com/robots.txt		(from )
+22:00:31	2011/2011	---M--	403	error ('Forbidden')	text/html	date:Wed,%2008%20Jul%202020%2015:00:30%20GMT	https://stackoverflow.com/robots.txt		(from )

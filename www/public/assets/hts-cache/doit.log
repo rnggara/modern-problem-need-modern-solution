@@ -1,0 +1,8 @@
+-qiC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.1) Gecko/20020826" -%F "" -%l "en, *" http://stackoverflow.com/questions https://stackoverflow.com/tags https://stackoverflow.com/users -O1 "C:\Users\Alissa Yarmantho\Documents\Copied website\Forum" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+File generated automatically on Wed, 08 Jul 2020 22:02:44, do NOT edit
+
+To update a mirror, just launch httrack without any parameters
+The existing cache will be used (and modified)
+To have other options, retype all parameters and launch HTTrack
+To continue an interrupted mirror, just launch httrack without any parameters
+
