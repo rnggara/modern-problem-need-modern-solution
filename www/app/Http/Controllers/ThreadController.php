@@ -64,7 +64,7 @@ class ThreadController extends Controller
      */
     public function show($id)
     {
-        $thread = Thread::find($id);
+        $thread = Thread::findById($id);
         $user = User::getById($thread[0]->id);
         return view('items.isiforum', [
             'thread' => $thread,
