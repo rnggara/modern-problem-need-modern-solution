@@ -115,4 +115,5 @@ class ThreadController extends Controller
         Thread::destroy($thread->id);
         return redirect('/thread');
     }
+
 }
