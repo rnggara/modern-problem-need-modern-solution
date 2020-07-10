@@ -25,17 +25,19 @@
                           <div class="ps-relative">
                               <textarea id="wmd-input"
                                         name="content"
-                                        class="wmd-input s-input bar0 js-post-body-field"
-                                        data-post-type-id="2"
-                                        cols="92" rows="15"
-                                        tabindex="101"
-                                        data-min-length=""></textarea>
+                                        {{-- class="wmd-input s-input bar0 js-post-body-field" --}}
+                                        {{-- data-post-type-id="2" --}}
+                                        {{-- cols="92" rows="15" --}}
+                                        {{-- tabindex="101" --}}
+                                        {{-- data-min-length="" --}}
+                                        ></textarea>
                           </div>
                           <div class="s-input-message mt4 d-none js-stacks-validation-message"></div>
                       </div>
                   </div>
                   <input type="text" class="form-control" name="tags" placeholder="Tags" data-role="tagsinput" style="display: none">
               </div>
+              <textarea name="content" id="wmd-input2" cols="30" rows="10"></textarea>
 
               <div class="form-submit cbt grid gsx gs4">
                   <button id="submit-button" class="grid--cell s-btn s-btn__primary s-btn__icon" type="submit" tabindex="120" autocomplete="off" style="font-family:'Nunito', sans-serif; font-weight: 600; background-color: black; border-radius: 25px; padding: 10px 20px;">
@@ -56,7 +58,7 @@
         <script src="{{asset('assets/tags-input/tagsInput.js')}}"></script>
         <script>
             tinymce.init({
-                selector:'textarea#wmd-input',
+                selector:'textarea#wmd-input2',
                 statusbar:false,
                 menubar:false,
                 width: "100%",
