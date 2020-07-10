@@ -11,16 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/master', function () {
-    return view('templateforum.master');
-});
+// <<<<<<< master
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+// Route::get('/master', function () {
+//     return view('templateforum.master');
+// });
 
-Route::get('/masuk', function () {
-    return view('masuk');
-});
+// Route::get('/masuk', function () {
+//     return view('masuk');
+// });
+// =======
+// Route::get('/', 'ThreadController@index');
+// >>>>>>> master
 
 Route::get('/forumhome', function () {
     return view('items.forumhome');
@@ -33,6 +37,10 @@ Route::get('/tanyaforum', function () {
 });
 Auth::routes();
 
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('Thread', 'ThreadController@index');
+=======
+Route::resource('thread', 'ThreadController');
+

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Thread;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class ThreadController extends Controller
 {
@@ -14,7 +16,8 @@ class ThreadController extends Controller
      */
     public function index()
     {
-        //
+        $threads = Thread::orderBy('updated_at', 'desc')->get();
+        return view('home', compact('threads'));
     }
 
     /**
@@ -24,7 +27,7 @@ class ThreadController extends Controller
      */
     public function create()
     {
-        //
+        return view('thread.create');
     }
 
     /**
@@ -35,7 +38,17 @@ class ThreadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $thread = new Thread;
+
+        $thread->title = $request->title;
+        $thread->content = $request->content;
+        $thread->slug = strtolower(str_replace(" ","-", $request->slug));
+        $thread->tags = $request->tags;
+        $thread->id_user = Auth::id();
+
+        $thread->save();
+
+        return redirect('/thread');
     }
 
     /**
@@ -57,7 +70,7 @@ class ThreadController extends Controller
      */
     public function edit(Thread $thread)
     {
-        //
+        return view('thread.edit', compact('thread'));
     }
 
     /**
@@ -69,7 +82,16 @@ class ThreadController extends Controller
      */
     public function update(Request $request, Thread $thread)
     {
-        //
+        $thread = Thread::find($thread->id);
+
+        $thread->title = $request->title;
+        $thread->content = $request->content;
+        $thread->slug = strtolower(str_replace(" ","-", $request->slug));
+        $thread->tags = $request->tags;
+
+        $thread->save();
+
+        return redirect('/thread');
     }
 
     /**
@@ -80,6 +102,7 @@ class ThreadController extends Controller
      */
     public function destroy(Thread $thread)
     {
-        //
+        Thread::destroy($thread->id);
+        return redirect('/thread');
     }
 }
