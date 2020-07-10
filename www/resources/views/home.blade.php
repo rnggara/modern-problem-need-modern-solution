@@ -8,8 +8,7 @@
                 <div class="card-header">
                      <h2>{{$thread->title}}</h2>
                 </div>
-                <div class="card-body">
-                    <p>{{$thread->content}}</p>
+                <div class="card-body">{!!$thread->content!!}
                 </div>
                 <div class="card-footer">
                     <div class="d-flex">
