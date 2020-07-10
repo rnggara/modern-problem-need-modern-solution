@@ -16,3 +16,7 @@ Route::get('/', 'ThreadController@index');
 Auth::routes();
 
 Route::resource('thread', 'ThreadController');
+
+// Voting system
+Route::get('/upvote/{thread}/thread', 'VoteController@upvote');
+Route::get('/downvote/{thread}/thread', 'VoteController@downvote');
