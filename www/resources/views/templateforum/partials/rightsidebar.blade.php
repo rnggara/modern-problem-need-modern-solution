@@ -1,6 +1,4 @@
-<div id="sidebar" role="complementary" aria-label="sidebar">
-
-
+{{-- <div id="sidebar" role="complementary" aria-label="sidebar">
 <style>.everyoneloves__top-leaderboard:empty,.everyoneloves__mid-leaderboard:empty,.everyoneloves__bot-mid-leaderboard:empty{
         margin-bottom:0;
 }
@@ -74,4 +72,4 @@
         Lihat lebih lanjut
     </a>
 </div>
-</div>
+</div> --}}
