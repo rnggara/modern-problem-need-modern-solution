@@ -1,5 +1,9 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 @yield('title')
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;600&display=swap" rel="stylesheet">
         <script src="{{ asset ('/assets/ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js') }}"></script>
@@ -12,7 +16,7 @@
 </head>
 
 <body class="questions-page unified-theme">
-    <header class="top-bar js-top-bar navbar top-bar__network _fixed" style= "background-color:4682B4; border-top: 0; box-shadow: 0px 1px 5px 2px rgba(0,0,0,0.4)">
+    <header class="top-bar js-top-bar navbar top-bar__network _fixed " style= "background-color: #4682b4;border-top: 0; box-shadow: 0px 1px 5px 2px rgba(0,0,0,0.4)">
         <div class="wmx12 mx-auto grid ai-center h100" role="menubar">
             <!-- This form is for the search bar at the top of the page -->
             <ol class="overflow-x-auto ml-auto -secondary grid ai-center list-reset h100 user-logged-out" role="presentation">
@@ -33,8 +37,13 @@
         </ol>
         </div>
     </header>
+
     
-    @yield ('content')
+    <div class="container">
+        @include('templateforum.partials.leftsidebar')
+        @yield('content')
+        @include('templateforum.partials.rightsidebar')
+    </div>
 
     <!-- Footer Section !-->
     <footer id="footer" class="site-footer js-footer" role="contentinfo">
@@ -54,7 +63,7 @@
     </noscript> --}}
 {{-- /commentout --}}
 
-@yield('scripts')
+@stack('scripts')
 
 {{-- commentout --}}
     {{-- <script>

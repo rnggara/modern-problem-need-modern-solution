@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-    @extends('templateforum.master')
-    @section ('title')
-    <title>Buat Pertanyaan - Tanya Kami</title>
-    @section('content')
-    <div class="container">
-      @include ('templateforum.partials.leftsidebar')
+@extends('templateforum.master')
+    
+@section ('title')
+<title>Buat Pertanyaan - Tanya Kami</title>
+@endsection
+
+
+@section('content')
+
       <div id="content" class="snippet-hidden">
               <div id="question-header" class="grid sm:fd-column" >
                   <h1 itemprop="name" class="grid--cell fs-headline1 fl1 ow-break-word mb8"  style="font-family:'Nunito', sans-serif; font-weight: 600; ">Ketik Pertanyaanmu!</h1>
@@ -25,11 +27,11 @@
                           <div class="ps-relative">
                               <textarea id="wmd-input"
                                         name="content"
-                                        {{-- class="wmd-input s-input bar0 js-post-body-field" --}}
-                                        {{-- data-post-type-id="2" --}}
-                                        {{-- cols="92" rows="15" --}}
-                                        {{-- tabindex="101" --}}
-                                        {{-- data-min-length="" --}}
+                                        class="wmd-input s-input bar0 js-post-body-field"
+                                        data-post-type-id="2"
+                                        cols="92" rows="15"
+                                        tabindex="101"
+                                        data-min-length=""
                                         ></textarea>
                           </div>
                           <div class="s-input-message mt4 d-none js-stacks-validation-message"></div>
@@ -47,14 +49,14 @@
               </div>
           </form>
     </div>
-    </div>
+@endsection
 
 
     @section('styles')
         <link href="{{asset('assets/tags-input/tagsInput.css')}}" rel="stylesheet">
     @endsection
 
-    @section('scripts')
+    @push('scripts')
         <script src="{{asset('assets/tags-input/tagsInput.js')}}"></script>
         <script>
             tinymce.init({
@@ -65,4 +67,4 @@
                 height: 300
             });
         </script>
-    @endsection
+    @endpush

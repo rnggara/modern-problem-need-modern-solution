@@ -5,8 +5,7 @@
 @endsection
 
 @section('content')
-<div class="container">
-    @include ('templateforum.partials.leftsidebar')
+
     <div id="content" class="snippet-hidden">
       <div id="mainbar" role="main" aria-labelledby="h-all-questions">
       <div class="grid">
@@ -103,7 +102,6 @@
     <br class="cbt"/>
 </div>
 
-<!-- Right side bar aka related tags and below !-->
-@include ('templateforum.partials.rightsidebar')
 </div>
 </div>
+@endsection
