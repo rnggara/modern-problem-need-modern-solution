@@ -2,7 +2,15 @@
     <div class="left-sidebar--sticky-container js-sticky-leftnav">
         <nav role="navigation">
             <ol class="nav-links">
+                
                 <li class="">
+                    <p>Hai,<br>
+                    @auth
+                    {{Auth::user()->name}}</p>
+                    @endauth
+                    @guest
+                    ayo bergabung!</p>
+                    @endguest
                     <a href="/" class="pl8 js-gps-track nav-links--link" style="font-family:'Nunito', sans-serif; font-weight: 600;">Home</a>
                 </li>
                 <li>

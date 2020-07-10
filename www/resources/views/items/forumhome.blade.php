@@ -33,10 +33,21 @@
                 <div class="stats">
                     <div class="vote">
                         <div class="votes">
-                            <a class="viewcount" style="pointer-event:none; color:grey; cursor: default;"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg"  width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></a>
-                            <span class="vote-count-post "><strong>0</strong></span>
+                            {{-- upvote --}}
+                            @auth
+                            <a class="viewcount" href="/upvote/{{$thread->id}}/thread" @if($thread->is_upvote_thread($thread->id)) style="pointer-events:none; color:grey; cursor: default;" @endif>
+                                <svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg"  width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg>
+                            </a>
+                            @endauth
+                            {{-- show vote number --}}
+                            <span class="vote-count-post "><strong>{{$thread->vote_count($thread->id)}}</strong></span>
                             <div class="viewcount">votes</div>
-                            <a class="viewcount"><svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg></a>
+                            {{-- downvote --}}
+                            @auth
+                            <a class="viewcount" href="/downvote/{{$thread->id}}/thread" @if($thread->is_downvote_thread($thread->id)) style="pointer-events:none; color:grey; cursor: default;" @endif>
+                                <svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg>
+                            </a>
+                            @endauth
                         </div>
                       </div>
                       <div class="status unanswered">
@@ -50,7 +61,7 @@
                     <h2><a href="/thread/post/{{$thread->id}}" class="question-hyperlink" style="font-family:'Nunito', sans-serif; font-size:1.5em; font-weight: 800; color: black;">{{$thread->title}}</a></h2>
                     @if (Auth::id() == $thread->user->id)
                     <div class="ml-auto align-self-center">
-                        <a href="" class="btn btn-sm btn-primary rounded">sunting</a>
+                        <a href="/thread/{{$thread->id}}/edit" class="btn btn-sm btn-primary rounded">sunting</a>
                     </div>
                      @endif
                 </div>
