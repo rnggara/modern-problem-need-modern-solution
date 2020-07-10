@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 class AnswerController extends Controller
 {
     public function store(Request $request){
-        $data['content'] = $request['content'];
-        $data['id_user'] = $request['id_user'];
-        $data['pinned'] = 0;
-        $data['id_thread'] = $request['id_thread'];
-        $data['created_at'] = date('Y-m-d H:i:s');
-        Answer::save($data);
+        $answer = new Answer();
+        $answer->content = $request['content'];
+        $answer->id_user = $request['id_user'];
+        $answer->id_thread = $request['id_thread'];
+        $answer->pinned = 0;
+        $answer->save();
         return redirect('/thread/post/'.$request['id_thread']);
     }
 }

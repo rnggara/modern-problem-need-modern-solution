@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Answer;
 use App\Thread;
 use App\User;
+use App\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,10 +47,10 @@ class ThreadController extends Controller
     {
         $thread = new Thread;
 
-        $thread->title = $request->title;
-        $thread->content = $request->content;
-        $thread->slug = strtolower(str_replace(" ","-", $request->title));
-        $thread->tags = $request->tags;
+        $thread->title = $request['title'];
+        $thread->content = $request['content'];
+        $thread->slug = strtolower(str_replace(" ","-", $request['title']));
+        $thread->tags = $request['tags'];
         $thread->id_user = Auth::id();
 
         $thread->save();
@@ -64,12 +66,30 @@ class ThreadController extends Controller
      */
     public function show($id)
     {
-        $thread = Thread::find($id);
-        $user = User::getById($thread[0]->id);
+        $thread = Thread::where('id', $id)->first();
+        $user = User::where('id', $thread->id)->first();
+        $answer = Answer::where('id_thread', $thread->id)->get();
+        $countAnswer = count($answer);
         return view('items.isiforum', [
             'thread' => $thread,
-            'user' => $user
+            'user' => $user,
+            'answer' => $answer,
+            'countAnswer' => $countAnswer
         ]);
+    }
+
+    public function vote(Request $request){
+        $vote = new Vote();
+        if ($request['submit'] == 'up'){
+            $v = 1;
+        } else {
+            $v = 0;
+        }
+        $vote->vote = $v;
+        $vote->id_user = $request['id_user'];
+        $vote->id_thread = $request['id_thread'];
+        $vote->id_answer = null;
+        $vote->save();
     }
 
     /**
@@ -95,7 +115,7 @@ class ThreadController extends Controller
         $thread = Thread::find($thread->id);
 
         $thread->title = $request->title;
-        $thread->content = $request->content;
+        $thread->content = $request['content'];
         $thread->slug = strtolower(str_replace(" ","-", $request->slug));
         $thread->tags = $request->tags;
 

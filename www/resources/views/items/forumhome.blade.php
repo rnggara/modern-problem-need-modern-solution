@@ -44,12 +44,9 @@
                       {!!$thread->content!!}
                   </div>
                   <div class="tags t-ios t-swift t-audiokit t-carthage">
-                      <?php
-                        $tag = explode(",", $thread->tags);
-                        foreach ($tag as $cat){ ?>
-                            <a class="post-tag">{{$cat}}</a>
-                        <?php }
-                      ?>
+                      @foreach(explode(",", $thread->tags) as $catTags)
+                          <a class="post-tag">{{$catTags}}</a>
+                      @endforeach
                   </div>
                   <div class="started fr">
                       <div class="user-info ">
