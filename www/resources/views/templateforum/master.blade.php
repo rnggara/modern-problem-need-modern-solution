@@ -11,9 +11,12 @@
 
         <script src="{{ asset ('/assets/ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js') }}"></script>
         <script src="{{ asset ('/assets/cdn.sstatic.net/Js/stub.en448c.js?v=39ab3f513667') }}"></script>
+        <script src="{{ asset('node_modules/tinymce/tinymce.js') }}"></script>
         <link rel="stylesheet" type="text/css" href="{{ asset ('/assets/cdn.sstatic.net/Shared/stacksbb51.css?v=0ee8a05683e7') }}" >
         <link rel="stylesheet" type="text/css" href="{{ asset ('/assets/cdn.sstatic.net/Sites/stackoverflow/primarya0e2.css?v=c5fdf309f06b') }}" >
         <link rel="icon" href="{{ asset ('/assets/favicon.gif') }}" type="image/gif" sizes="16x16">
+
+    @yield('styles')
     </head>
     <body class="questions-page unified-theme">
 
@@ -22,23 +25,21 @@
     <div class="wmx12 mx-auto grid ai-center h100" role="menubar">
 
   <!-- This form is for the search bar at the top of the page -->
-            <form id="search" role="search" action=https://stackoverflow.com/search method="get" class="grid--cell fl-grow1 searchbar px12 js-searchbar" style = "width: 100px;">
-                    <div class="ps-relative">
-                        <input name="q"
-                               type="text"
-                               placeholder="Cari&#x2026;"
-                               value=""
-                               autocomplete="off"
-                               maxlength="240"
-                               class="s-input s-input__search js-search-field " style = "border-radius: 25px; width: 300px; float: right; font-family:'Nunito', sans-serif;">
-                      </div>
-            </form>
 <ol class="overflow-x-auto ml-auto -secondary grid ai-center list-reset h100 user-logged-out" role="presentation">
         <li class="-item searchbar-trigger"><a href="#" class="-link js-searchbar-trigger" role="button" aria-label="Search" aria-haspopup="true" aria-controls="search" title="Click to show search"><svg aria-hidden="true" class="svg-icon iconSearch" width="18" height="18" viewBox="0 0 18 18"><path d="M18 16.5l-5.14-5.18h-.35a7 7 0 10-1.19 1.19v.35L16.5 18l1.5-1.5zM12 7A5 5 0 112 7a5 5 0 0110 0z"/></svg></a></li>
 
             <li class="-ctas">
-                            <<a href="/masuk" class="login-link s-btn s-btn__primary py8 js-gps-track" style="font-family:'Nunito', sans-serif; font-weight: 600; color: black; background-color: #e7e7e7; border-radius: 25px; padding: 20px;}"rel="nofollow">Masuk</a>
-                            <a href="users/signup9359.html?ssrc=head&amp;returnurl=%2fusers%2fstory%2fcurrent" class="login-link s-btn s-btn__primary py8" style="font-family:'Nunito', sans-serif; font-weight: 600; background-color: black; border-radius: 25px; padding: 20px;" rel="nofollow" data-ga="[&quot;sign up&quot;,&quot;Sign Up Navigation&quot;,&quot;Header&quot;,null,null]">Daftar Sekarang</a>
+                @guest
+                    <a href="{{ route('login') }}" class="login-link s-btn s-btn__primary py8 js-gps-track" style="font-family:'Nunito', sans-serif; font-weight: 600; color: black; background-color: #e7e7e7; border-radius: 25px; padding: 20px;}"rel="nofollow">Masuk</a>
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}" class="login-link s-btn s-btn__primary py8" style="font-family:'Nunito', sans-serif; font-weight: 600; background-color: black; border-radius: 25px; padding: 20px;" rel="nofollow" data-ga="[&quot;sign up&quot;,&quot;Sign Up Navigation&quot;,&quot;Header&quot;,null,null]">Daftar Sekarang</a>
+                    @endif
+                @else
+                    <a class="login-link s-btn s-btn__primary py8" style="font-family:'Nunito', sans-serif; font-weight: 600; color: black; background-color: #e7e7e7; border-radius: 25px; padding: 20px;}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                @endguest
             </li>
 </ol>
     </div>
@@ -52,7 +53,6 @@
                   &#169; 2020 Tanya Kami
                 </p>
             </div>
-        </div>
     </footer>
             <script>StackExchange.ready(function () { StackExchange.responsiveness.addSwitcher(); })</script>
     <noscript>
@@ -60,6 +60,9 @@
             <img src=" {{ asset ('/assets/pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif') }}" alt="" class="dno">
         </div>
     </noscript>
+
+
+    @yield('scripts')
 
         <script>
 (function(i, s, o, g, r, a, m) {

@@ -23,24 +23,27 @@
 //     return view('masuk');
 // });
 // =======
-// Route::get('/', 'ThreadController@index');
+//
 // >>>>>>> master
 
-Route::get('/forumhome', function () {
-    return view('items.forumhome');
-});
-Route::get('/isiforum', function () {
+Route::get('/', 'ThreadController@index');
+
+Route::get('/forumhome', 'ThreadController@index');
+Route::get('/thread/post/{id}', 'ThreadController@show');
+Route::get('/tanyaforum', 'ThreadController@create');
+Route::get('/thread/post/{$id}', function (){
     return view('items.isiforum');
 });
-Route::get('/tanyaforum', function () {
-    return view('items.tanyaforum');
-});
 Auth::routes();
+
+// Answer
+Route::post('/answer', 'AnswerController@store');
+
 
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('Thread', 'ThreadController@index');
-=======
+
 Route::resource('thread', 'ThreadController');
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Thread;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +18,7 @@ class ThreadController extends Controller
     public function index()
     {
         $threads = Thread::orderBy('updated_at', 'desc')->get();
-        return view('home', compact('threads'));
+        return view('items.forumhome', compact('threads'));
     }
 
     /**
@@ -27,7 +28,11 @@ class ThreadController extends Controller
      */
     public function create()
     {
-        return view('thread.create');
+        if(!Auth::guest()) {
+            return view('items.tanyaforum');
+        }else{
+            return redirect('/login');
+        }
     }
 
     /**
@@ -42,7 +47,7 @@ class ThreadController extends Controller
 
         $thread->title = $request->title;
         $thread->content = $request->content;
-        $thread->slug = strtolower(str_replace(" ","-", $request->slug));
+        $thread->slug = strtolower(str_replace(" ","-", $request->title));
         $thread->tags = $request->tags;
         $thread->id_user = Auth::id();
 
@@ -57,9 +62,14 @@ class ThreadController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show(Thread $thread)
+    public function show($id)
     {
-        //
+        $thread = Thread::find($id);
+        $user = User::getById($thread[0]->id);
+        return view('items.isiforum', [
+            'thread' => $thread,
+            'user' => $user
+        ]);
     }
 
     /**
