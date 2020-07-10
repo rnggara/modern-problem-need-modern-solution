@@ -3,12 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\DB;
-=======
 use Illuminate\Support\Facades\Auth;
 use App\Vote;
->>>>>>> vote-feature
 
 class Thread extends Model
 {
