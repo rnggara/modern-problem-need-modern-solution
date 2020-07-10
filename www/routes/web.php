@@ -36,7 +36,6 @@ Route::get('/thread/post/{$id}', function (){
 });
 Auth::routes();
 
-<<<<<<< HEAD
 // Answer
 Route::post('/answer', 'AnswerController@store');
 
@@ -48,10 +47,8 @@ Route::resource('Thread', 'ThreadController@index');
 
 Route::resource('thread', 'ThreadController');
 
-=======
 Route::resource('thread', 'ThreadController');
 
 // Voting system
 Route::get('/upvote/{thread}/thread', 'VoteController@upvote');
 Route::get('/downvote/{thread}/thread', 'VoteController@downvote');
->>>>>>> vote-feature

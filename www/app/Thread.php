@@ -19,13 +19,11 @@ class Thread extends Model
         return $this->belongsTo('App\User', 'id_user');
     }
 
-<<<<<<< HEAD
     public static function find($id)
     {
         return DB::table('threads')->where('id', $id)->get();
     }
 
-=======
     public function is_upvote_thread($id_thread)
     {
         $vote = Vote::where('id_thread', $id_thread)
@@ -58,5 +56,4 @@ class Thread extends Model
                         ->sum('vote');
         return $votes;
     }
->>>>>>> vote-feature
 }
