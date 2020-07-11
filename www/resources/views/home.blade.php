@@ -7,6 +7,9 @@
             <div class="card my-3">
                 <div class="card-header">
                      <h2>{{$thread->title}}</h2>
+                    @foreach ($thread->tags as $tag)
+                <a href="#" class="badge badge-dark">{{$tag->name}}</a>
+                    @endforeach
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -18,14 +21,14 @@
                                 <a  href="/upvote/{{$thread->id}}/thread" class="text-center"><i class="fa fa-angle-up" style="font-size:3em"></i></a>
                                 @endif
                                 <p class="text-center" style="margin:0">{{$thread->vote_count($thread->id)}}<br>Vote</p>
-                                @if ($thread->is_downvote_thread($thread->id))@else 
+                                @if ($thread->is_downvote_thread($thread->id)) @else 
                                 <a href="/downvote/{{$thread->id}}/thread" class="text-center" ><i class="fa fa-angle-down" style="font-size:3em"></i></a>
                                 @endif
                                 {{-- /vote --}}
                                 @endauth
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col" style="border-left: 1px dashed #333">
                             {!!$thread->content!!}
                         </div>
                     </div>               

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
 use App\Thread;
 use App\User;
 use Illuminate\Http\Request;
@@ -43,15 +44,29 @@ class ThreadController extends Controller
      */
     public function store(Request $request)
     {
+        // save newly created thread data
         $thread = new Thread;
 
         $thread->title = $request->title;
         $thread->content = $request->content;
         $thread->slug = strtolower(str_replace(" ","-", $request->title));
-        $thread->tags = $request->tags;
         $thread->id_user = Auth::id();
-
         $thread->save();
+
+        // save thread tags
+        $tags = explode(',', $request->tags);
+        $tagIds = [];
+        foreach ($tags as $tagName) {
+            $tagName = trim($tagName);
+            if ($tagName != "") {
+                $tag = Tag::firstOrCreate(['name'=>$tagName]);
+                if ($tag) {
+                    $tagIds[] = $tag->id;
+                }
+            }
+        }
+        
+        $thread->tags()->sync($tagIds);
 
         return redirect('/thread');
     }
@@ -97,7 +112,6 @@ class ThreadController extends Controller
         $thread->title = $request->title;
         $thread->content = $request->content;
         $thread->slug = strtolower(str_replace(" ","-", $request->slug));
-        $thread->tags = $request->tags;
 
         $thread->save();
 
