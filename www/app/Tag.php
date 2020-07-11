@@ -11,6 +11,6 @@ class Tag extends Model
 
     public function threads()
     {
-        return $this->belongToMany('App\Thread');
+        return $this->belongsToMany('App\Thread');
     }
 }

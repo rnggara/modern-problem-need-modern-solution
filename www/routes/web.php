@@ -52,3 +52,6 @@ Route::resource('thread', 'ThreadController');
 // Voting system
 Route::get('/upvote/{thread}/thread', 'VoteController@upvote');
 Route::get('/downvote/{thread}/thread', 'VoteController@downvote');
+
+// Tag
+Route::get('/tag/{tag}', 'TagController@index');

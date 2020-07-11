@@ -108,12 +108,26 @@ class ThreadController extends Controller
     public function update(Request $request, Thread $thread)
     {
         $thread = Thread::find($thread->id);
-
+        // update thread
         $thread->title = $request->title;
         $thread->content = $request->content;
         $thread->slug = strtolower(str_replace(" ","-", $request->slug));
-
         $thread->save();
+
+        // update tag
+        $tags = explode(',', $request->tags);
+        $tagIds = [];
+        foreach ($tags as $tagName) {
+            $tagName = trim($tagName);
+            if ($tagName != "") {
+                $tag = Tag::firstOrCreate(['name'=>$tagName]);
+                if ($tag) {
+                    $tagIds[] = $tag->id;
+                }
+            }
+        }
+        
+        $thread->tags()->sync($tagIds);
 
         return redirect('/thread');
     }
