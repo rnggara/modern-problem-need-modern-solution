@@ -14,12 +14,13 @@
                             <div class="d-flex flex-column justify-content-center">
                                 @auth
                                 {{-- vote --}}
-                                    <a href="/upvote/{{$thread->id}}/thread" class="text-center" @if ($thread->is_upvote_thread($thread->id)) disabled @endif><i class="fa fa-angle-up" style="font-size:3em"></i></a>
-                                    
-                                    <p class="text-center" style="margin:0">{{$thread->vote_count($thread->id)}}<br>Vote</p>
-                                        
-                                    <a href="/upvote/{{$thread->id}}/thread" class="text-center" @if ($thread->is_upvote_thread($thread->id)) disabled @endif><i class="fa fa-angle-down" style="font-size:3em"></i></a>
-                                    
+                                @if ($thread->is_upvote_thread($thread->id))@else 
+                                <a  href="/upvote/{{$thread->id}}/thread" class="text-center"><i class="fa fa-angle-up" style="font-size:3em"></i></a>
+                                @endif
+                                <p class="text-center" style="margin:0">{{$thread->vote_count($thread->id)}}<br>Vote</p>
+                                @if ($thread->is_downvote_thread($thread->id))@else 
+                                <a href="/downvote/{{$thread->id}}/thread" class="text-center" ><i class="fa fa-angle-down" style="font-size:3em"></i></a>
+                                @endif
                                 {{-- /vote --}}
                                 @endauth
                             </div>
