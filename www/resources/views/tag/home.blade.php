@@ -13,7 +13,7 @@
                 <div class="card-header">
                      <h2>{{$thread->title}}</h2>
                     @foreach ($thread->tags as $tag)
-                    <a href="/tag/{{$tag->id}}" class="badge badge-dark">{{$tag->name}}</a>
+                    <a href="/tag/{{$tag->id}}" class="badge badge-secondary">{{$tag->name}}</a>
                     @endforeach
                 </div>
                 <div class="card-body">
