@@ -10,7 +10,7 @@
     </div>
     <div class="form-group">
       <label for="tags">Tag</label>
-      <input type="text" class="form-control" value="{{$thread->tags}}" id="tags" name="tags" placeholder="Tuliskan tag untuk thread">
+      <input type="text" class="form-control" value="@foreach($thread->tags as $tag){{$tag->name}}, @endforeach" id="tags" name="tags" placeholder="Tuliskan tag untuk thread">
     </div>
     <div class="form-group">
         <label for="content">Thread</label>

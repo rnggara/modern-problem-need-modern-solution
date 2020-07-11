@@ -16,7 +16,13 @@ class Thread extends Model
         return $this->belongsTo('App\User', 'id_user');
     }
 
-    public static function find($id)
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag');
+    }
+
+    // jangan pakai nama fungsi 'find' biar ga override fungsi eloquent
+    public static function findById($id)
     {
         return DB::table('threads')->where('id', $id)->get();
     }

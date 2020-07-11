@@ -1,18 +1,23 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 @yield('title')
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;600&display=swap" rel="stylesheet">
-        <script src="{{ asset ('/assets/ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js') }}"></script>
+        {{-- <script src="{{ asset ('/assets/ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js') }}"></script> --}}
         <script src="{{ asset ('/assets/cdn.sstatic.net/Js/stub.en448c.js?v=39ab3f513667') }}"></script>
         <script src="{{ asset('node_modules/tinymce/tinymce.js') }}"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{{ asset ('/assets/cdn.sstatic.net/Shared/stacksbb51.css?v=0ee8a05683e7') }}" >
         <link rel="stylesheet" type="text/css" href="{{ asset ('/assets/cdn.sstatic.net/Sites/stackoverflow/primarya0e2.css?v=c5fdf309f06b') }}" >
-        <link rel="icon" href="{{ asset ('/assets/favicon.gif') }}" type="image/gif" sizes="16x16">
+        {{-- <link rel="icon" href="{{ asset ('/assets/favicon.gif') }}" type="image/gif" sizes="16x16"> --}}
         @yield('styles')
 </head>
 
 <body class="questions-page unified-theme">
-    <header class="top-bar js-top-bar navbar top-bar__network _fixed" style= "background-color:4682B4; border-top: 0; box-shadow: 0px 1px 5px 2px rgba(0,0,0,0.4)">
+    <header class="top-bar js-top-bar navbar top-bar__network _fixed " style= "background-color: #4682b4;border-top: 0; box-shadow: 0px 1px 5px 2px rgba(0,0,0,0.4)">
         <div class="wmx12 mx-auto grid ai-center h100" role="menubar">
             <!-- This form is for the search bar at the top of the page -->
             <ol class="overflow-x-auto ml-auto -secondary grid ai-center list-reset h100 user-logged-out" role="presentation">
@@ -33,8 +38,13 @@
         </ol>
         </div>
     </header>
+
     
-    @yield ('content')
+    <div class="container">
+        @include('templateforum.partials.leftsidebar')
+        @yield('content')
+        @include('templateforum.partials.rightsidebar')
+    </div>
 
     <!-- Footer Section !-->
     <footer id="footer" class="site-footer js-footer" role="contentinfo">
@@ -54,7 +64,7 @@
     </noscript> --}}
 {{-- /commentout --}}
 
-@yield('scripts')
+@stack('scripts')
 
 {{-- commentout --}}
     {{-- <script>
@@ -94,5 +104,8 @@
                         _comscore.push({ c1: "2", c2: "17440561" });            })();
     </script> --}}
 {{-- commentout --}}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </body>
     </html>

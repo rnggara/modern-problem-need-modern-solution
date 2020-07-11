@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Answer;
+use App\Tag;
 use App\Thread;
 use App\User;
-use App\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +19,7 @@ class ThreadController extends Controller
     public function index()
     {
         $threads = Thread::orderBy('updated_at', 'desc')->get();
-        return view('items.forumhome', compact('threads'));
+        return view('home', compact('threads'));
     }
 
     /**
@@ -31,7 +30,7 @@ class ThreadController extends Controller
     public function create()
     {
         if(!Auth::guest()) {
-            return view('items.tanyaforum');
+            return view('thread.create');
         }else{
             return redirect('/login');
         }
@@ -45,6 +44,7 @@ class ThreadController extends Controller
      */
     public function store(Request $request)
     {
+        // save newly created thread data
         $thread = new Thread;
 
         $thread->title = $request['title'];
@@ -52,8 +52,22 @@ class ThreadController extends Controller
         $thread->slug = strtolower(str_replace(" ","-", $request['title']));
         $thread->tags = $request['tags'];
         $thread->id_user = Auth::id();
-
         $thread->save();
+
+        // save thread tags
+        $tags = explode(',', $request->tags);
+        $tagIds = [];
+        foreach ($tags as $tagName) {
+            $tagName = trim($tagName);
+            if ($tagName != "") {
+                $tag = Tag::firstOrCreate(['name'=>$tagName]);
+                if ($tag) {
+                    $tagIds[] = $tag->id;
+                }
+            }
+        }
+
+        $thread->tags()->sync($tagIds);
 
         return redirect('/thread');
     }
@@ -72,24 +86,8 @@ class ThreadController extends Controller
         $countAnswer = count($answer);
         return view('items.isiforum', [
             'thread' => $thread,
-            'user' => $user,
-            'answer' => $answer,
-            'countAnswer' => $countAnswer
+            'user' => $user
         ]);
-    }
-
-    public function vote(Request $request){
-        $vote = new Vote();
-        if ($request['submit'] == 'up'){
-            $v = 1;
-        } else {
-            $v = 0;
-        }
-        $vote->vote = $v;
-        $vote->id_user = $request['id_user'];
-        $vote->id_thread = $request['id_thread'];
-        $vote->id_answer = null;
-        $vote->save();
     }
 
     /**
@@ -113,13 +111,26 @@ class ThreadController extends Controller
     public function update(Request $request, Thread $thread)
     {
         $thread = Thread::find($thread->id);
-
+        // update thread
         $thread->title = $request->title;
         $thread->content = $request['content'];
         $thread->slug = strtolower(str_replace(" ","-", $request->slug));
-        $thread->tags = $request->tags;
-
         $thread->save();
+
+        // update tag
+        $tags = explode(',', $request->tags);
+        $tagIds = [];
+        foreach ($tags as $tagName) {
+            $tagName = trim($tagName);
+            if ($tagName != "") {
+                $tag = Tag::firstOrCreate(['name'=>$tagName]);
+                if ($tag) {
+                    $tagIds[] = $tag->id;
+                }
+            }
+        }
+
+        $thread->tags()->sync($tagIds);
 
         return redirect('/thread');
     }

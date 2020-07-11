@@ -2,6 +2,11 @@
 
 @section('content')
 <div class="row justify-content-center">
+    <div class="col-10">
+        <h2>Tag: {{$tag->name}}</h3>
+    </div>
+</div>
+<div class="row justify-content-center">
     <div class="col-md-10">
         @foreach ($threads as $thread)
             <div class="card my-3">
