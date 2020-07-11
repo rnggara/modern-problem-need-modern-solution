@@ -18,7 +18,7 @@ class ThreadController extends Controller
     public function index()
     {
         $threads = Thread::orderBy('updated_at', 'desc')->get();
-        return view('items.forumhome', compact('threads'));
+        return view('home', compact('threads'));
     }
 
     /**
@@ -29,7 +29,7 @@ class ThreadController extends Controller
     public function create()
     {
         if(!Auth::guest()) {
-            return view('items.tanyaforum');
+            return view('thread.create');
         }else{
             return redirect('/login');
         }

@@ -8,7 +8,26 @@
                 <div class="card-header">
                      <h2>{{$thread->title}}</h2>
                 </div>
-                <div class="card-body">{!!$thread->content!!}
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-1">
+                            <div class="d-flex flex-column justify-content-center">
+                                @auth
+                                {{-- vote --}}
+                                    <a href="/upvote/{{$thread->id}}/thread" class="text-center" @if ($thread->is_upvote_thread($thread->id)) disabled @endif><i class="fa fa-angle-up" style="font-size:3em"></i></a>
+                                    
+                                    <p class="text-center" style="margin:0">{{$thread->vote_count($thread->id)}}<br>Vote</p>
+                                        
+                                    <a href="/upvote/{{$thread->id}}/thread" class="text-center" @if ($thread->is_upvote_thread($thread->id)) disabled @endif><i class="fa fa-angle-down" style="font-size:3em"></i></a>
+                                    
+                                {{-- /vote --}}
+                                @endauth
+                            </div>
+                        </div>
+                        <div class="col">
+                            {!!$thread->content!!}
+                        </div>
+                    </div>               
                 </div>
                 <div class="card-footer">
                     <div class="d-flex">
@@ -17,17 +36,6 @@
                         <a href="/thread/{{$thread->id}}/edit" class="btn btn-primary btn-sm ml-auto">Sunting</a>
                         @endif
                     </div>
-                    @auth
-                    {{-- vote --}}
-                    <div class="d-flex justify-content-center">
-                        <a href="/upvote/{{$thread->id}}/thread" class="btn btn-sm btn-primary mr-2 @if ($thread->is_upvote_thread($thread->id)) disabled @endif">Upvote</a>
-                        <button class="btn btn-danger btn-sm mr-2">
-                            Vote <span class="badge badge-light">{{$thread->vote_count($thread->id)}}</span>
-                          </button>
-                        <a href="/downvote/{{$thread->id}}/thread" class="btn btn-sm btn-primary @if ($thread->is_downvote_thread($thread->id)) disabled @endif" >Downvote</a>
-                    </div>
-                    {{-- /vote --}}
-                    @endauth
                 </div>
             </div>
         @endforeach
