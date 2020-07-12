@@ -19,9 +19,8 @@ class CreateThreadsTable extends Migration
             $table->text('content');
             $table->text('slug');
             $table->unsignedBigInteger('id_user');
-            $table->text('tags');
             $table->timestamps();
-            $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

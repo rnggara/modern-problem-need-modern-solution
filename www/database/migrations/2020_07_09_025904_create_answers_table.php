@@ -20,8 +20,8 @@ class CreateAnswersTable extends Migration
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_thread')->nullable();
             $table->timestamps();
-            $table->foreign('id_user')->references('id')->on('users');
-            $table->foreign('id_thread')->references('id')->on('threads');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_thread')->references('id')->on('threads')->onDelete('cascade');
         });
     }
 
