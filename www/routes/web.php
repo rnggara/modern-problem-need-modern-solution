@@ -26,18 +26,26 @@
 //
 // >>>>>>> master
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', 'ThreadController@index');
 
 Route::get('/forumhome', 'ThreadController@index');
 Route::get('/thread/post/{id}', 'ThreadController@show');
 Route::get('/tanyaforum', 'ThreadController@create');
-Route::get('/thread/post/{$id}', function (){
-    return view('items.isiforum');
-});
+Route::get('/answer/{id}/edit', 'AnswerController@show');
+Route::get('/comment/{id}/edit', 'CommentController@show');
 Auth::routes();
 
 // Answer
 Route::post('/answer', 'AnswerController@store');
+Route::put('/answer', 'AnswerController@update');
+Route::delete('/answer', 'AnswerController@destroy');
+
+// Comment
+Route::post('/comment', 'CommentController@store');
+Route::put('/comment', 'CommentController@update');
+Route::delete('/comment', 'CommentController@destroy');
 
 
 
@@ -52,6 +60,12 @@ Route::resource('thread', 'ThreadController');
 // Voting system
 Route::get('/upvote/{thread}/thread', 'VoteController@upvote');
 Route::get('/downvote/{thread}/thread', 'VoteController@downvote');
+Route::get('/upvote/{answer}/answer', 'VoteController@upvote_answer');
+Route::get('/downvote/{answer}/answer', 'VoteController@downvote_answer');
+
+// Pinned System
+Route::get('/answer/{id}/pinned', 'ThreadController@pinned');
+Route::get('/answer/{id}/unpinned', 'ThreadController@unpinned');
 
 // Tag
 Route::get('/tag/{tag}', 'TagController@index');

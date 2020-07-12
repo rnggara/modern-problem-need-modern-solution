@@ -3,17 +3,42 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class Answer extends Model
 {
-//    public static function save($data)
-//    {
-//        return DB::table('answers')->insert($data);
-//    }
-//
-//    public static function getByIdThread($id)
-//    {
-//        return DB::table('answers')->where('id_thread', $id)->get();
-//    }
+
+    public function is_upvote_answer($id_answer)
+    {
+        $vote = Vote::where('id_answer', $id_answer)
+            ->firstWhere('id_user', Auth::id());
+        if (isset($vote)) {
+            if ($vote->vote == 1) {
+                return true;
+            };
+        };
+        return false;
+
+    }
+
+    public function is_downvote_answer($id_answer)
+    {
+        $vote = Vote::where('id_answer', $id_answer)
+            ->firstWhere('id_user', Auth::id());
+
+        if (isset($vote)) {
+            if ($vote->vote == -1) {
+                return true;
+            };
+        };
+        return false;
+    }
+
+    public function vote_count($id_answer)
+    {
+        $votes = Vote::where('id_answer', $id_answer)
+            ->sum('vote');
+        return $votes;
+    }
 }

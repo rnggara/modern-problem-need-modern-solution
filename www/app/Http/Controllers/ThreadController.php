@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
+use App\Score;
 use App\Tag;
 use App\Thread;
 use App\User;
+use App\Answer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +22,16 @@ class ThreadController extends Controller
     public function index()
     {
         $threads = Thread::orderBy('updated_at', 'desc')->get();
-        return view('home', compact('threads'));
+        // system point
+        $users = User::all();
+        foreach ($users as $user) {
+            $point[$user->id] = Score::getPoint($user->id);
+        }
+        // end system point
+        return view('home', [
+            'threads' => $threads,
+            'point' => $point
+        ]);
     }
 
     /**
@@ -50,7 +62,7 @@ class ThreadController extends Controller
         $thread->title = $request['title'];
         $thread->content = $request['content'];
         $thread->slug = strtolower(str_replace(" ","-", $request['title']));
-        $thread->tags = $request['tags'];
+//        $thread->tags = $request['tags'];
         $thread->id_user = Auth::id();
         $thread->save();
 
@@ -82,12 +94,53 @@ class ThreadController extends Controller
     {
         $thread = Thread::where('id', $id)->first();
         $user = User::where('id', $thread->id)->first();
-        $answer = Answer::where('id_thread', $thread->id)->get();
-        $countAnswer = count($answer);
-        return view('items.isiforum', [
+        $answers = Answer::where('id_thread', $thread->id)
+            ->orderBy('created_at', 'DESC')
+            ->orderBy('pinned', 'DESC')
+            ->get();
+        // system point
+        $users = User::all();
+        foreach ($users as $user) {
+            $point[$user->id] = Score::getPoint($user->id);
+        }
+        // end system point
+
+        $commentThread = Comment::whereNull('id_answer')
+            ->where('id_thread', $thread->id)
+            ->orderBy('created_at', 'DESC')
+            ->limit(7)
+            ->get();
+        $commentAnswer = Comment::all();
+        $users = User::all();
+        $countAnswer = count($answers);
+        return view('thread.show', [
             'thread' => $thread,
-            'user' => $user
+            'user' => $user,
+            'answers' => $answers,
+            'countAnswer' => $countAnswer,
+            'users' => $users,
+            'commentThread' => $commentThread,
+            'commentAnswer' => $commentAnswer,
+            'point' => $point
         ]);
+    }
+
+    public function pinned($id)
+    {
+        $answer = Answer::find($id);
+        $answer->pinned = 1;
+        $answer->save();
+
+        return redirect('/thread/post/'.$answer->id_thread);
+    }
+
+    public function unpinned($id)
+    {
+        $answer = Answer::find($id);
+        $answer->pinned = 0;
+        $answer->save();
+
+        return redirect('/thread/post/'.$answer->id_thread);
     }
 
     /**
