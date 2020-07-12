@@ -14,19 +14,20 @@ class VoteController extends Controller
     {
         $vote = Vote::where('id_thread', $thread->id)
                     ->firstWhere('id_user', Auth::id());
-
-        if ($vote) {
-            $vote->vote = 1;
+        
+        if (isset($vote)){
+            $vote->vote += 1;
             $vote->save();
-            return redirect('/thread/post/'.$thread->id);
-        } else {
-            Vote::create([
-                'id_user' => Auth::id(),
-                'id_thread' => $thread->id,
-                'vote' => 1
-            ]);
-            return redirect('/thread/post/'.$thread->id);
+                
+        } else{
+            $vote = new Vote;
+            $vote->id_user = Auth::id();
+            $vote->vote = 1;
+            $vote->id_thread = $thread->id;
+            $vote->save();
         }
+        
+        return redirect('/thread/post/'.$thread->id);
 
     }
 
@@ -34,19 +35,22 @@ class VoteController extends Controller
     {
         $vote = Vote::where('id_thread', $thread->id)
                     ->firstWhere('id_user', Auth::id());
+          
 
-        if ($vote) {
-            $vote->vote = -1;
-            $vote->save();
+            if (isset($vote)){
+                $vote->vote -= 1;
+                $vote->save();
+                    
+            } else{
+                $vote = new Vote;
+                $vote->id_user = Auth::id();
+                $vote->vote = -1;
+                $vote->id_thread = $thread->id;
+                $vote->save();
+            }
+
             return redirect('/thread/post/'.$thread->id);
-        } else {
-            Vote::create([
-                'id_user' => Auth::id(),
-                'id_thread' => $thread->id,
-                'vote' => -1
-            ]);
-            return redirect('/thread/post/'.$thread->id);
-        }
+        
     }
 
     // for upvoting on home page
@@ -55,18 +59,20 @@ class VoteController extends Controller
         $vote = Vote::where('id_thread', $thread->id)
                     ->firstWhere('id_user', Auth::id());
 
-        if ($vote) {
-            $vote->vote = 1;
+        if (isset($vote)){
+            $vote->vote +=1;
             $vote->save();
-            return redirect('/');
-        } else {
-            Vote::create([
-                'id_user' => Auth::id(),
-                'id_thread' => $thread->id,
-                'vote' => 1
-            ]);
-            return redirect('/');
+                
+        } else{
+            $vote = new Vote;
+            $vote->id_user = Auth::id();
+            $vote->vote = 1;
+            $vote->id_thread = $thread->id;
+            $vote->save();
         }
+
+            return redirect('/');
+        
 
     }
 
@@ -76,18 +82,18 @@ class VoteController extends Controller
         $vote = Vote::where('id_thread', $thread->id)
                     ->firstWhere('id_user', Auth::id());
 
-        if ($vote) {
-            $vote->vote = -1;
-            $vote->save();
+        if (isset($vote)){
+                $vote->vote -= 1;
+                $vote->save();
+                    
+            } else{
+                $vote = new Vote;
+                $vote->id_user = Auth::id();
+                $vote->vote = -1;
+                $vote->id_thread = $thread->id;
+                $vote->save();
+            }
             return redirect('/');
-        } else {
-            Vote::create([
-                'id_user' => Auth::id(),
-                'id_thread' => $thread->id,
-                'vote' => -1
-            ]);
-            return redirect('/');
-        }
     }
 
     public function upvote_answer(Answer $answer)
@@ -95,18 +101,19 @@ class VoteController extends Controller
         $vote = Vote::where('id_answer', $answer->id)
             ->firstWhere('id_user', Auth::id());
 
-        if ($vote) {
-            $vote->vote = 1;
-            $vote->save();
-            return redirect('/thread/post/'.$answer->id_thread);
-        } else {
-            Vote::create([
-                'id_user' => Auth::id(),
-                'id_answer' => $answer->id,
-                'vote' => 1
-            ]);
-            return redirect('/thread/post/'.$answer->id_thread);
-        }
+            if (isset($vote)){
+                $vote->vote += 1;
+                $vote->save();
+                    
+            } else{
+                $vote = new Vote;
+                $vote->id_user = Auth::id();
+                $vote->vote = 1;
+                $vote->id_answer = $answer->id;
+                $vote->save();
+            }
+        return redirect('/thread/post/'.$answer->id_thread);
+        
     }
 
     public function downvote_answer(Answer $answer)
@@ -114,18 +121,19 @@ class VoteController extends Controller
         $vote = Vote::where('id_answer', $answer->id)
             ->firstWhere('id_user', Auth::id());
 
-        if ($vote) {
-            $vote->vote = -1;
-            $vote->save();
+            if (isset($vote)){
+                $vote->vote -= 1;
+                $vote->save();
+                    
+            } else{
+                $vote = new Vote;
+                $vote->id_user = Auth::id();
+                $vote->vote = -1;
+                $vote->id_answer = $answer->id;
+                $vote->save();
+            }
             return redirect('/thread/post/'.$answer->id_thread);
-        } else {
-            Vote::create([
-                'id_user' => Auth::id(),
-                'id_answer' => $answer->id,
-                'vote' => -1
-            ]);
-            return redirect('/thread/post/'.$answer->id_thread);
-        }
+        
 
     }
 }
