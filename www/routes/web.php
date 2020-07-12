@@ -60,6 +60,8 @@ Route::resource('thread', 'ThreadController');
 // Voting system
 Route::get('/upvote/{thread}/thread', 'VoteController@upvote');
 Route::get('/downvote/{thread}/thread', 'VoteController@downvote');
+Route::get('/upvotehome/{thread}/thread', 'VoteController@upvotehome');
+Route::get('/downvotehome/{thread}/thread', 'VoteController@downvotehome');
 Route::get('/upvote/{answer}/answer', 'VoteController@upvote_answer');
 Route::get('/downvote/{answer}/answer', 'VoteController@downvote_answer');
 

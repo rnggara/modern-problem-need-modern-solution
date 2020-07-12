@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row justify-content-center">
-    <div class="col-md-10">
+    <div class="col-md-11">
         @foreach ($threads as $thread)
             <div class="card my-3">
                 <div class="card-header">
@@ -13,7 +13,26 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col">
+                        <div class="col-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                    @auth
+                                        {{-- vote --}}
+                                        @if ($thread->is_upvote_thread($thread->id))@else
+                                            <a  href="/upvotehome/{{$thread->id}}/thread" class="text-center"><i class="fa fa-angle-up" style="font-size:3em"></i></a>
+                                        @endif
+                                    @endauth
+                                    <p class="text-center" style="margin:0">{{$thread->vote_count($thread->id)}}<br>Vote</p>
+                                    @auth
+                                        @if ($thread->is_downvote_thread($thread->id)) @else
+                                            <a href="/downvotehome/{{$thread->id}}/thread" class="text-center" ><i class="fa fa-angle-down" style="font-size:3em"></i></a>
+                                        @endif
+                                        {{-- /vote --}}
+                                    @endauth
+                                    <br>
+                                <p class="text-center">{{$thread->answers->count()}}<br><small>Jawaban</small></p>
+                                </div>
+                            </div>
+                        <div class="col" style="border-left: 1px solid rgb(212, 212, 212)">
                             {!!$thread->content!!}
                         </div>
                     </div>

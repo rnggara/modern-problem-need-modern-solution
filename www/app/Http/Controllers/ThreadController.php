@@ -95,8 +95,8 @@ class ThreadController extends Controller
         $thread = Thread::where('id', $id)->first();
         $user = User::where('id', $thread->id)->first();
         $answers = Answer::where('id_thread', $thread->id)
-            ->orderBy('created_at', 'DESC')
             ->orderBy('pinned', 'DESC')
+            ->orderBy('created_at')
             ->get();
         // system point
         $users = User::all();
@@ -107,7 +107,7 @@ class ThreadController extends Controller
 
         $commentThread = Comment::whereNull('id_answer')
             ->where('id_thread', $thread->id)
-            ->orderBy('created_at', 'DESC')
+            ->orderBy('created_at')
             ->limit(7)
             ->get();
         $commentAnswer = Comment::all();

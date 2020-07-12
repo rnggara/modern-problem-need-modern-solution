@@ -49,6 +49,47 @@ class VoteController extends Controller
         }
     }
 
+    // for upvoting on home page
+    public function upvotehome(Thread $thread)
+    {
+        $vote = Vote::where('id_thread', $thread->id)
+                    ->firstWhere('id_user', Auth::id());
+
+        if ($vote) {
+            $vote->vote = 1;
+            $vote->save();
+            return redirect('/');
+        } else {
+            Vote::create([
+                'id_user' => Auth::id(),
+                'id_thread' => $thread->id,
+                'vote' => 1
+            ]);
+            return redirect('/');
+        }
+
+    }
+
+    // for downvoting on homepage
+    public function downvotehome(Thread $thread)
+    {
+        $vote = Vote::where('id_thread', $thread->id)
+                    ->firstWhere('id_user', Auth::id());
+
+        if ($vote) {
+            $vote->vote = -1;
+            $vote->save();
+            return redirect('/');
+        } else {
+            Vote::create([
+                'id_user' => Auth::id(),
+                'id_thread' => $thread->id,
+                'vote' => -1
+            ]);
+            return redirect('/');
+        }
+    }
+
     public function upvote_answer(Answer $answer)
     {
         $vote = Vote::where('id_answer', $answer->id)

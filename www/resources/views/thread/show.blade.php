@@ -6,15 +6,14 @@
             <div class="card my-3">
                 <div class="card-header">
                     <h2><a href="/thread/post/{{$thread->id}}">{{$thread->title}}</a></h2>
-                    <small>Dibuat oleh : {{$thread->user->username}}, [{{$point[$thread->user->id]}}]
-                    <br>
-                        Pada : {{date('d F Y H:i:s', strtotime($thread->created_at))}}
-                        <br>
-                        Tags:
-                        @foreach ($thread->tags as $tag)
-                            <a href="/tag/{{$tag->id}}" class="badge badge-secondary">{{$tag->name}}</a>
-                        @endforeach
-                    </small>
+                    <div class="d-flex">
+                        <small>Dibuat oleh : {{$thread->user->username}}, Reputasi : [{{$point[$thread->user->id]}}]<br>
+                            Tags:
+                            @foreach ($thread->tags as $tag)
+                                <a href="/tag/{{$tag->id}}" class="badge badge-secondary">{{$tag->name}}</a>
+                            @endforeach</small>
+                        <small class="ml-auto"> Pada : {{date('d F Y H:i:s', strtotime($thread->created_at))}}</small>
+                    </div>                    
                 </div>
                 <div class="card-body">
                     <div class="row" style="border-bottom: 1px solid rgb(212, 212, 212)">
@@ -35,7 +34,7 @@
                                 @endauth
                             </div>
                         </div>
-                        <div class="col" style="border-left: 1px solid rgb(212, 212, 212)">
+                        <div class="col mb-4" style="border-left: 1px solid rgb(212, 212, 212)">
                             {!!$thread->content!!}
                         </div>
                     </div>
@@ -49,7 +48,7 @@
                                         @endif
                                     @endforeach <label class="text-muted">{{date('d F Y H:i:s', strtotime($comment->created_at))}}</label>
                                     @if($comment->id_user == Auth::id())
-                                        <a href="/comment/{{$comment->id}}/edit" class="btn btn-sm btn-secondary text-white"><i class="fa fa-pencil"></i></a>
+                                        <a href="/comment/{{$comment->id}}/edit" class="btn btn-sm"><i class="fa fa-pencil text-muted"></i></a>
                                     @endif
                                 </p>
                             </div>
@@ -59,8 +58,8 @@
                 <div class="card-footer">
                     <div class="d-flex">
                         <input type="hidden" id="id-thread" value="{{$thread->id}}">
-                        <button type="button" class="btn btn-sm ml-2 btn-secondary" id="btnComment" onclick="openComment(this, '#btnAnswer')" value="{{$thread->id}}"><i class="fa fa-comment"></i></button>
-                        <button type="button" class="btn btn-sm ml-2 btn-secondary" id="btnAnswer" onclick="openAnswer(this, '#btnComment')" value="{{$thread->id}}"><i class="fa fa-reply"></i></button>
+                        <a class="btn btn-sm" onclick="openComment(this, '#btnAnswer')" value="{{$thread->id}}" data-toggle="tooltip" title="Beri komentar"><i class="fa fa-comment" id="btnComment"></i></a>
+                        <a class="btn btn-sm" onclick="openAnswer(this, '#btnComment')" value="{{$thread->id}}" data-toggle="tooltip" title="Beri jawaban"><i class="fa fa-reply"  id="btnAnswer"></i></a>
                         @if (Auth::id() == $thread->user->id)
                             <a href="/thread/{{$thread->id}}/edit" class="btn btn-primary btn-sm ml-auto">Sunting</a>
                         @endif
@@ -85,10 +84,11 @@
                         <div class="col">
                         @foreach($users as $catUser)
                             @if($catUser->id == $answer->id_user)
-                                <small>Dibuat oleh : {{$catUser->username}}
-                                    <br>
-                                    Pada : {{date('d F Y H:i:s', strtotime($answer->created_at))}}
-                                </small>
+                            <div class="d-flex">
+                                <small>Dibuat oleh : {{$catUser->username}}</small>
+                                <small class="ml-auto">Pada : {{date('d F Y H:i:s', strtotime($answer->created_at))}}</small>
+                            </div>
+                                
                             @endif
                         @endforeach
                         </div>
@@ -111,7 +111,7 @@
                                     @endauth
                                 </div>
                             </div>
-                            <div class="col" style="border-left: 1px solid rgb(212, 212, 212)">
+                            <div class="col mb-4" style="border-left: 1px solid rgb(212, 212, 212)">
                                 {!!$answer->content!!}
                             </div>
                         </div>
@@ -126,7 +126,7 @@
                                             @endif
                                         @endforeach <label class="text-muted">{{date('d F Y H:i:s', strtotime($comment->created_at))}}</label>
                                         @if($comment->id_user == Auth::id())
-                                            <a href="/comment/{{$comment->id}}/edit" class="btn btn-sm btn-secondary text-white"><i class="fa fa-pencil"></i></a>
+                                            <a href="/comment/{{$comment->id}}/edit" class="btn btn-sm"><i class="fa fa-pencil text-muted"></i></a>
                                         @endif
                                     </p>
                                 </div>
@@ -137,12 +137,12 @@
                     <div class="card-footer">
                         <div class="d-flex">
                             <input type="hidden" id="id-thread" value="{{$thread->id}}">
-                            <button type="button" class="btn btn-sm ml-2 btn-secondary" onclick="openCommentAnswer(this, '#comment-div-{{$answer->id}}')" value="{{$thread->id}}"><i class="fa fa-comment"></i></button>
+                            <a type="button" class="btn btn-sm ml-2" onclick="openCommentAnswer(this, '#comment-div-{{$answer->id}}')" value="{{$thread->id}}"><i class="fa fa-comment"></i></a>
                             @if(Auth::id() == $thread->user->id)
                                 @if($answer->pinned == 1)
-                                    <a href="/answer/{{$answer->id}}/unpinned" class="btn btn-danger btn-sm ml-2"><i class="fa fa-bookmark"></i></a>
+                                    <a href="/answer/{{$answer->id}}/unpinned" class="btn btn-sm ml-2"><i class="fa fa-bookmark text-danger"></i></a>
                                 @else
-                                    <a href="/answer/{{$answer->id}}/pinned" class="btn btn-success btn-sm ml-2"><i class="fa fa-bookmark"></i></a>
+                                    <a href="/answer/{{$answer->id}}/pinned" class="btn btn-sm ml-2"><i class="fa fa-bookmark text-success"></i></a>
                                 @endif
                             @endif
                             @if (Auth::id() == $answer->id_user)
@@ -275,12 +275,12 @@
                             $('body, html').animate({
                                 scrollTop: $(comment).offset().top
                             }, 600);
-                            $(button).removeClass('btn-secondary').addClass('btn-primary');
+                            $(button).removeClass('text-muted').addClass('text-primary');
                         } else {
                             $('body, html').animate({
                                 scrollTop: $(button).offset().top
                             }, 600);
-                            $(button).removeClass('btn-primary').addClass('btn-secondary');
+                            $(button).removeClass('text-primary').addClass('text-muted');
                         }
                     }
 
@@ -288,16 +288,18 @@
                         $("#answer").toggle();
                         if(!$("#comment").is(":visible")){
                             $("#comment").css('display', 'none');
-                            $(next).removeClass('btn-primary').addClass('btn-secondary');
+                            $(next).removeClass('text-primary').addClass('text-muted');
                         } else {
                             $("#comment").css('display', 'none');
-                            $(next).removeClass('btn-primary').addClass('btn-secondary');
+                            $(next).removeClass('text-muted').addClass('text-primary');
                         }
+
                         if ($("#answer").is(":visible")){
-                            $(button).removeClass('btn-secondary').addClass('btn-primary');
+                            $(button).removeClass('text-muted').addClass('text-primary');
                         } else {
-                            $(button).removeClass('btn-primary').addClass('btn-secondary');
+                            $(button).removeClass('text-primary').addClass('text-muted');
                         }
+
                         $('body, html').animate({
                             scrollTop: $("#answer").offset().top
                         }, 600);
@@ -307,15 +309,15 @@
                         $("#comment").toggle();
                         if(!$("#answer").is(":visible")){
                             $("#answer").css('display', 'none');
-                            $(next).removeClass('btn-primary').addClass('btn-secondary');
+                            $(next).removeClass('text-primary').addClass('text-muted');
                         } else {
                             $("#answer").css('display', 'none');
-                            $(next).removeClass('btn-primary').addClass('btn-secondary');
+                            $(next).removeClass('text-muted').addClass('text-primary');
                         }
                         if ($("#comment").is(":visible")){
-                            $(button).removeClass('btn-secondary').addClass('btn-primary');
+                            $(button).removeClass('text-muted').addClass('text-primary');
                         } else {
-                            $(button).removeClass('btn-primary').addClass('btn-secondary');
+                            $(button).removeClass('text-primary').addClass('text-muted');
                         }
                         $('body, html').animate({
                             scrollTop: $("#comment").offset().top

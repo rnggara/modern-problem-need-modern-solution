@@ -21,6 +21,11 @@ class Thread extends Model
         return $this->belongsToMany('App\Tag');
     }
 
+    public function answers()
+    {
+        return $this->hasMany('App\Answer', "id_thread");
+    }
+
     // jangan pakai nama fungsi 'find' biar ga override fungsi eloquent
     public static function findById($id)
     {
